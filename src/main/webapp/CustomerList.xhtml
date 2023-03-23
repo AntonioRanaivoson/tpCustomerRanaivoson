@@ -10,40 +10,48 @@
     </h:head>
     <h:body>
         <f:view>
-       <p:dataTable value="#{customerBean.customers}"
-               var="item" paginator="true"  rows="10"  rowsPerPageTemplate="2,4,8,10"
-               paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">>
-            <p:column>
-               <f:facet name="header">
-                   <h:outputText value="Id"/>
-               </f:facet>
-               <h:outputText value="#{item.customerId}"/>
-            </p:column>
-            <p:column sortBy="#{item.name}">
-               <f:facet name="header">
-                   <h:outputText value="Nom"/>
-               </f:facet>
-               <h:outputText value="#{item.name}"/>
-            </p:column>
-            <p:column>
-               <f:facet name="header">
-                   <h:outputText value="Ville"/>
-               </f:facet>
-               <h:outputText value="#{item.city}"/>
-            </p:column>
-            <p:column>
-               <f:facet name="header">
-                   <h:outputText value="Code de reduction"/>
-               </f:facet>
-               <h:outputText value="#{item.discount.code} : #{item.discount.rate} %"/>
-            </p:column>
-           <p:column>
-               <f:facet name="header">
-                   <h:outputText value="ZIP"/>
-               </f:facet>
-               <h:outputText value="#{item.zip.zipCode} : (Radius :  #{item.zip.radius} ,Length :#{item.zip.areaLength} , Width : #{item.zip.areaWidth}"/>
-            </p:column>
-        </p:dataTable>
-            </f:view>
+            <p:dataTable value="#{customerBean.customers}" var="item" widgetVar="customerTable"
+                         emptyMessage="Aucun client avec ce critère"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="2,4,8,10"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputPanel>
+                            <h:outputText value="Recherche dans tous les champs de recherche"/>
+                            <p:inputText id="globalFilter" onkeyup="PF('customerTable').filter()"
+                                         style="width:150px"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    <h:link outcome="CustomerDetails?idCustomer=#{item.customerId}" 
+                            value="#{item.customerId}"/>
+                </p:column>
+                <p:column sortBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="Nom"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ville"/>
+                    </f:facet>
+                    <h:outputText value="#{item.city}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Code de reduction"/>
+                    </f:facet>
+                    <h:outputText value="#{item.discount.code} : #{item.discount.rate} %"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="ZIP"/>
+                    </f:facet>
+                    <h:outputText value="#{item.zip.zipCode} : (Radius :  #{item.zip.radius} ,Length :#{item.zip.areaLength} , Width : #{item.zip.areaWidth}"/>
+                </p:column>
+            </p:dataTable>
+        </f:view>
     </h:body>
 </html>
